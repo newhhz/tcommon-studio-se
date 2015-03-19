@@ -38,6 +38,8 @@ public final class ConnectionUtils {
 
     private static List<String> sybaseDBProductsNames;
 
+    public static final String AS400_PRODUCT_NAME = "AS/400"; //$NON-NLS-1$
+
     public static final String IBM_DB2_ZOS_PRODUCT_NAME = "DB2"; //$NON-NLS-1$
 
     public static final String POSTGRESQL_PRODUCT_NAME = "POSTGRESQL"; //$NON-NLS-1$
@@ -359,6 +361,14 @@ public final class ConnectionUtils {
         }
         // ~
         return dbMetaData;
+    }
+
+    public static boolean isAS400(DatabaseMetaData metadata) throws SQLException {
+        if (metadata != null && metadata.getDatabaseProductName() != null
+                && metadata.getDatabaseProductName().indexOf(AS400_PRODUCT_NAME) > -1) {
+            return true;
+        }
+        return false;
     }
 
     /**

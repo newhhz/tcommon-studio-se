@@ -590,6 +590,10 @@ public class DBConnectionFillerImpl extends MetadataFillerImpl<DatabaseConnectio
      * @return
      */
     private boolean isDbSupportCatalogNames(DatabaseMetaData dbJDBCMetadata) throws SQLException {
+        // fix for TDI-31956 , AS400 product name is "DB2 UDB for AS/400" but is not DB2 and it support catalog
+        if (ConnectionUtils.isAS400(dbJDBCMetadata)) {
+            return true;
+        }
         // Now here that OracleForSid,db2,OdbcTeradata dosen't support the catalog name.
         if (ConnectionUtils.isOracleForSid(dbJDBCMetadata, EDatabaseTypeName.ORACLEFORSID.getProduct())
                 || ConnectionUtils.isDB2(dbJDBCMetadata) || ConnectionUtils.isOdbcTeradata(dbJDBCMetadata)
